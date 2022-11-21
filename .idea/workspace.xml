@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d95b9d77-ed1a-475d-b804-4eaf8f521919" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/main/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/mt-api-go/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/main.go" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,26 +33,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultGoTemplateProperty": "Go File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.go.format.on.save.advertiser.fired": "true",
-    "RunOnceActivity.go.formatter.settings.were.checked": "true",
-    "RunOnceActivity.go.migrated.go.modules.settings": "true",
-    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
-    "RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "configurable..is.expanded": "false",
-    "configurable.GoLibrariesConfigurable.is.expanded": "true",
-    "go.import.settings.migrated": "true",
-    "last_opened_file_path": "/Users/riwahara",
-    "settings.editor.selected.configurable": "com.goide.configuration.GoLibrariesConfigurableProvider"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.format.on.save.advertiser.fired&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;configurable..is.expanded&quot;: &quot;false&quot;,
+    &quot;configurable.GoLibrariesConfigurable.is.expanded&quot;: &quot;true&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/riwahara&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.goide.configuration.GoLibrariesConfigurableProvider&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/main" />
     </key>
   </component>
@@ -61,7 +64,7 @@
       <kind value="FILE" />
       <package value="mt-api-go" />
       <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$/main/main.go" />
+      <filePath value="$PROJECT_DIR$/main.go" />
       <method v="2" />
     </configuration>
     <recent_temporary>
