@@ -1,0 +1,47 @@
+-- m_musclepart初期値
+insert into muscle_tracking_go.m_musclepart values ('chest','胸','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_musclepart values ('back','背中','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_musclepart values ('leg','脚','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_musclepart values ('shoulder','肩','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_musclepart values ('arm','腕','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_musclepart values ('abs','腹','init',now(),'init',now(),1);
+
+-- m_menu初期値
+insert into muscle_tracking_go.m_menu values (default,'ベンチプレス','chest',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'インクラインマシンプレス','chest',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'マシンプレス','chest',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'マシンフライ','chest',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'ディップス','chest',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'ダンベルプレス','chest',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'チンニング','back',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'ベントオーバーロウ','back',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'ラットプルダウン','back',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'マシンプル','back',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'ケーブルロー','back',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'デッドリフト','back',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'スクワット','leg',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'スティフレッグドデッドリフト','leg',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'レッグエクステンション','leg',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'マシンスクワット','leg',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'レッグエクステンション(片脚)','leg',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'レッグカール','leg',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'レッグカール(片脚)','leg',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'ブルガリアンスクワット','leg',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'ハックスクワット','leg',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'カーフレイズ','leg',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'マシンフロントプレス','shoulder',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'スミスフロントプレス','shoulder',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'ケーブルフロントレイズ','shoulder',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'サイドレイズ','shoulder',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'ケーブルサイドレイズ','shoulder',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'マシンサイドレイズ','shoulder',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'リアデルト','shoulder',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'マシンレッグカール','arm',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'EZバーカール','arm',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'インクラインカール','arm',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'インクラインハンマーカール','arm',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'ケーブルプレス','arm',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'トライセプスエクステンション','arm',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'ナロープッシュアップ','arm',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'ケーブルフレンチプレス','arm',null,'0','init',now(),'init',now(),1);
+insert into muscle_tracking_go.m_menu values (default,'アブローラー','abs',null,'0','init',now(),'init',now(),1);
