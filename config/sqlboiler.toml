@@ -1,0 +1,12 @@
+pkgname = "model"
+output = "../domain/model"
+
+[psql]
+    schema = "muscle_tracking_go"
+    dbname = "muscletracking"
+    host = "localhost"
+    port = 5433
+    user = "mtadmin"
+    pass = "mtadmin"
+    sslmode = "disable"
+    blacklist = []
