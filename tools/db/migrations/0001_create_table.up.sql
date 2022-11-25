@@ -83,16 +83,16 @@ ALTER TABLE
     muscle_tracking_go.t_bodycomp ADD PRIMARY KEY("userid","trainingdate");
 
 ALTER TABLE
-    muscle_tracking_go.m_menu ADD CONSTRAINT "m_menu_userid_foreign" FOREIGN KEY("userid") REFERENCES "m_user"("userid");
+    muscle_tracking_go.m_menu ADD CONSTRAINT "m_menu_userid_foreign" FOREIGN KEY("userid") REFERENCES muscle_tracking_go.m_user("userid");
 
 ALTER TABLE
-    muscle_tracking_go.t_traininglog ADD CONSTRAINT "t_traininglog_userid_foreign" FOREIGN KEY("userid") REFERENCES "m_user"("userid");
+    muscle_tracking_go.t_traininglog ADD CONSTRAINT "t_traininglog_userid_foreign" FOREIGN KEY("userid") REFERENCES muscle_tracking_go.m_user("userid");
 
 ALTER TABLE
-    muscle_tracking_go.t_traininglog ADD CONSTRAINT "t_traininglog_menuid_foreign" FOREIGN KEY("menuid") REFERENCES "m_menu"("menuid");
+    muscle_tracking_go.t_traininglog ADD CONSTRAINT "t_traininglog_menuid_foreign" FOREIGN KEY("menuid") REFERENCES muscle_tracking_go.m_menu("menuid");
 
 ALTER TABLE
-    muscle_tracking_go.m_menu ADD CONSTRAINT "m_menu_musclepartid_foreign" FOREIGN KEY("musclepartid") REFERENCES "m_musclepart"("musclepartid");
+    muscle_tracking_go.m_menu ADD CONSTRAINT "m_menu_musclepartid_foreign" FOREIGN KEY("musclepartid") REFERENCES muscle_tracking_go.m_musclepart("musclepartid");
 
 CREATE SEQUENCE IF NOT EXISTS  m_menu_menuid_seq;
 ALTER TABLE muscle_tracking_go.m_menu ALTER COLUMN "menuid" SET DEFAULT nextval('m_menu_menuid_seq');

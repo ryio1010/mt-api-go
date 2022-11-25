@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d95b9d77-ed1a-475d-b804-4eaf8f521919" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/cmd/mt-api-go/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/main.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/db/migrations/0001_create_table.up.sql" beforeDir="false" afterPath="$PROJECT_DIR$/tools/db/migrations/0001_create_table.up.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/db/migrations/0002_insert_initialdata.down.sql" beforeDir="false" afterPath="$PROJECT_DIR$/tools/db/migrations/0002_insert_initialdata.down.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +29,9 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2HXWpR0ezCauwg3lkIO0hL3mN1D" />
   <component name="ProjectViewState">
@@ -52,12 +57,19 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/db/migrations" />
+      <recent name="$PROJECT_DIR$/domain/repository" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tools/db/migrations" />
+      <recent name="$PROJECT_DIR$/tools/bk" />
+      <recent name="$PROJECT_DIR$/tools" />
+      <recent name="$PROJECT_DIR$/cmd/mt-api-go" />
       <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/main" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Go Build.go build mt-api-go/cmd/mt-api-go">
     <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="mt-api-go" />
       <working_directory value="$PROJECT_DIR$" />
@@ -67,8 +79,18 @@
       <filePath value="$PROJECT_DIR$/main.go" />
       <method v="2" />
     </configuration>
+    <configuration name="go build mt-api-go/cmd/mt-api-go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="mt-api-go" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="mt-api-go/cmd/mt-api-go" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/cmd/mt-api-go/main.go" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Build.go build mt-api-go/cmd/mt-api-go" />
         <item itemvalue="Go Build.go build main.go" />
       </list>
     </recent_temporary>
