@@ -6,7 +6,5 @@ import (
 )
 
 type IUserRepository interface {
-	selectUserById(ctx context.Context) (model.MUser, error)
-	insertUser(ctx context.Context)
-	updateUser(ctx context.Context)
+	SelectUserById(ctx context.Context, id string) (*model.MUser, error)
 }

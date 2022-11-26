@@ -6,10 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="d95b9d77-ed1a-475d-b804-4eaf8f521919" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/repository/user_repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/domain/repository/user_repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/service/user_service.go" beforeDir="false" afterPath="$PROJECT_DIR$/domain/service/user_service.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/db/migrations/0001_create_table.up.sql" beforeDir="false" afterPath="$PROJECT_DIR$/tools/db/migrations/0001_create_table.up.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/db/migrations/0002_insert_initialdata.down.sql" beforeDir="false" afterPath="$PROJECT_DIR$/tools/db/migrations/0002_insert_initialdata.down.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/infrastructure/postgres/postgres.go" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructure/postgres/postgres.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/usecase/model/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/model/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/usecase/user_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/user_usecase.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
