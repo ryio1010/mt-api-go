@@ -2,10 +2,12 @@ package main
 
 import (
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"mt-api-go/adapter/http"
 )
 
 func main() {
@@ -30,4 +32,12 @@ func main() {
 		}
 	}
 
+	engine := http.InitUserRouter()
+	engine.Use(gin.Logger())
+	engine.Use(gin.Recovery())
+
+	err = engine.Run(":8081")
+	if err != nil {
+		fmt.Println("ERROR!!!")
+	}
 }

@@ -1,5 +1,5 @@
 pkgname = "model"
-output = "../domain/model"
+output = "domain/model"
 
 [psql]
     schema = "muscle_tracking_go"
