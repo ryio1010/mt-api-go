@@ -1,6 +1,7 @@
 package http
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"mt-api-go/usecase"
 	"net/http"
@@ -23,6 +24,7 @@ func (uh *UserHandler) FindUserById() gin.HandlerFunc {
 
 		user, err := uh.usecase.FindUserById(ctx, userId)
 		if err != nil {
+			fmt.Println(err)
 			c.JSON(http.StatusInternalServerError, err.Error())
 		}
 

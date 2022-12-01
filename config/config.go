@@ -7,7 +7,6 @@ const (
 	dbName     = "muscletracking"
 	dbHost     = "localhost"
 	dbPort     = "5433"
-	dbSchema   = "muscle_tracking_go"
 )
 
 type AppConfig struct {
@@ -25,7 +24,6 @@ type PostgreSQLInfo struct {
 	DbName   string
 	Host     string
 	Port     string
-	Schema   string
 }
 
 func LoadConfig() *AppConfig {
@@ -41,7 +39,6 @@ func LoadConfig() *AppConfig {
 		DbName:   dbName,
 		Host:     dbHost,
 		Port:     dbPort,
-		Schema:   dbSchema,
 	}
 
 	conf := AppConfig{

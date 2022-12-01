@@ -5,17 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d95b9d77-ed1a-475d-b804-4eaf8f521919" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/config/config.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/di/di.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/infrastructure/db_conn.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/adapter/http/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/adapter/http/router.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/adapter/http/user_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/adapter/http/user_handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/mt-api-go/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/mt-api-go/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/sqlboiler.toml" beforeDir="false" afterPath="$PROJECT_DIR$/sqlboiler.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/postgres/postgres.go" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructure/postgres/postgres.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/infrastructure/db_conn.go" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructure/db_conn.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

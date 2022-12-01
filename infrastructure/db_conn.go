@@ -26,14 +26,14 @@ func NewPostgreSQLConnector() *PostgreSQLConnector {
 }
 
 func postgresConnInfo(postgresInfo config.PostgreSQLInfo) string {
-	dataSourceName := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?currentSchema=%s?sslmode=disable",
+	dataSourceName := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable",
 		postgresInfo.User,
 		postgresInfo.Password,
 		postgresInfo.Host,
 		postgresInfo.Port,
 		postgresInfo.DbName,
-		postgresInfo.Schema,
 	)
+	fmt.Println(dataSourceName)
 
 	return dataSourceName
 }
