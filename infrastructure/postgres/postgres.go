@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 	"github.com/rs/zerolog/log"
+	"github.com/volatiletech/sqlboiler/v4/boil"
 	"github.com/volatiletech/sqlboiler/v4/queries/qm"
 	"mt-api-go/domain/model"
 	"mt-api-go/domain/repository"
@@ -30,4 +31,13 @@ func (ur *userRepository) SelectUserById(ctx context.Context, userId string) (*m
 	}
 	fmt.Println(user)
 	return user, err
+}
+
+func (ur *userRepository) InsertNewUser(ctx context.Context, user *model.MUser) error {
+	err := user.Insert(ctx, ur.DB, boil.Infer())
+	if err != nil {
+		log.Error().Msg(err.Error())
+		return err
+	}
+	return nil
 }

@@ -8,6 +8,7 @@ import (
 
 type IUserService interface {
 	FindUserById(ctx context.Context, id string) (*model.MUser, error)
+	InsertNewUser(ctx context.Context, user *model.MUser) error
 }
 
 type userService struct {
@@ -22,4 +23,7 @@ func NewUserService(ur repository.IUserRepository) IUserService {
 
 func (us *userService) FindUserById(ctx context.Context, id string) (*model.MUser, error) {
 	return us.repo.SelectUserById(ctx, id)
+}
+func (us *userService) InsertNewUser(ctx context.Context, user *model.MUser) error {
+	return us.repo.InsertNewUser(ctx, user)
 }
