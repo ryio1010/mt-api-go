@@ -5,10 +5,12 @@ import (
 	"database/sql"
 	"fmt"
 	"github.com/rs/zerolog/log"
+	"github.com/volatiletech/null/v8"
 	"github.com/volatiletech/sqlboiler/v4/boil"
 	"github.com/volatiletech/sqlboiler/v4/queries/qm"
 	"mt-api-go/domain/model"
 	"mt-api-go/domain/repository"
+	"time"
 )
 
 type userRepository struct {
@@ -34,6 +36,12 @@ func (ur *userRepository) SelectUserById(ctx context.Context, userId string) (*m
 }
 
 func (ur *userRepository) InsertNewUser(ctx context.Context, user *model.MUser) error {
+	user.Regid = null.StringFrom(user.Userid)
+	user.Regdate = null.TimeFrom(time.Now())
+	user.Updid = null.StringFrom(user.Userid)
+	user.Upddate = null.TimeFrom(time.Now())
+	user.Version = 1
+
 	err := user.Insert(ctx, ur.DB, boil.Infer())
 	if err != nil {
 		log.Error().Msg(err.Error())

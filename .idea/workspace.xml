@@ -6,12 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="d95b9d77-ed1a-475d-b804-4eaf8f521919" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/adapter/http/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/adapter/http/router.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/adapter/http/user_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/adapter/http/user_handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/repository/user_repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/domain/repository/user_repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/service/user_service.go" beforeDir="false" afterPath="$PROJECT_DIR$/domain/service/user_service.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/infrastructure/postgres/postgres.go" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructure/postgres/postgres.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usecase/user_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/user_usecase.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
