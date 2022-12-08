@@ -10,6 +10,7 @@ import (
 type IUserUseCase interface {
 	FindUserById(ctx context.Context, id string) (*model.User, error)
 	InsertNewUser(ctx context.Context, user *model.User) error
+	UpdateUser(ctx context.Context, user *model.User) error
 }
 
 type userUseCase struct {
@@ -39,6 +40,21 @@ func (uu *userUseCase) InsertNewUser(ctx context.Context, user *model.User) erro
 		Password: user.Password,
 	}
 	err := uu.svc.InsertNewUser(ctx, &insertionTarget)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (uu *userUseCase) UpdateUser(ctx context.Context, user *model.User) error {
+	updateTarget := models.MUser{
+		Userid:   string(user.ID),
+		Username: user.Name,
+		Password: user.Password,
+	}
+	err := uu.svc.UpdateUser(ctx, &updateTarget)
 
 	if err != nil {
 		return err

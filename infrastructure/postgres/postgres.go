@@ -49,3 +49,18 @@ func (ur *userRepository) InsertNewUser(ctx context.Context, user *model.MUser) 
 	}
 	return nil
 }
+
+func (ur *userRepository) UpdateUser(ctx context.Context, user *model.MUser) error {
+	user.Regid = null.StringFrom(user.Userid)
+	user.Regdate = null.TimeFrom(time.Now())
+	user.Updid = null.StringFrom(user.Userid)
+	user.Upddate = null.TimeFrom(time.Now())
+	user.Version = 1
+
+	_, err := user.Update(ctx, ur.DB, boil.Infer())
+	if err != nil {
+		log.Error().Msg(err.Error())
+		return err
+	}
+	return nil
+}
