@@ -12,24 +12,24 @@ type IUserService interface {
 	UpdateUser(ctx context.Context, user *model.MUser) error
 }
 
-type userService struct {
+type UserService struct {
 	repo repository.IUserRepository
 }
 
 func NewUserService(ur repository.IUserRepository) IUserService {
-	return &userService{
+	return &UserService{
 		repo: ur,
 	}
 }
 
-func (us *userService) FindUserById(ctx context.Context, id string) (*model.MUser, error) {
+func (us *UserService) FindUserById(ctx context.Context, id string) (*model.MUser, error) {
 	return us.repo.SelectUserById(ctx, id)
 }
 
-func (us *userService) InsertNewUser(ctx context.Context, user *model.MUser) error {
+func (us *UserService) InsertNewUser(ctx context.Context, user *model.MUser) error {
 	return us.repo.InsertNewUser(ctx, user)
 }
 
-func (us *userService) UpdateUser(ctx context.Context, user *model.MUser) error {
+func (us *UserService) UpdateUser(ctx context.Context, user *model.MUser) error {
 	return us.repo.UpdateUser(ctx, user)
 }
