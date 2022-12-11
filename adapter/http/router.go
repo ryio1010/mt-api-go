@@ -27,8 +27,13 @@ func InitUserRouter() *gin.Engine {
 	userGroup := g.Group(userApiRoot)
 	{
 		handler := NewUserHandler(uc)
+
 		relativePath := fmt.Sprintf("/:%s", userIdParam)
 		userGroup.GET(relativePath, handler.FindUserById())
+
+		relativePath = ""
+		userGroup.POST(relativePath, handler.InsertNewUser())
+		userGroup.PUT(relativePath, handler.UpdateUser())
 	}
 
 	return g

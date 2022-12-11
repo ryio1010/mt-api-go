@@ -2,8 +2,9 @@ package repository
 
 import (
 	"context"
+	"mt-api-go/domain/model"
 )
 
 type IMusclePartRepository interface {
-	selectAllMusclePart(ctx context.Context)
+	SelectAllMusclePart(ctx context.Context) (*model.MMusclepart, error)
 }
