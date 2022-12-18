@@ -31,6 +31,7 @@ func (ur *userRepository) SelectUserById(ctx context.Context, userId string) (*m
 	if err != nil {
 		log.Error().Msg(err.Error())
 	}
+	fmt.Print("selectUserInfo")
 	fmt.Println(user)
 	return user, err
 }

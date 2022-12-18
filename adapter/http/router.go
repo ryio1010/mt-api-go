@@ -1,7 +1,6 @@
 package http
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"mt-api-go/domain/service"
 	"mt-api-go/infrastructure"
@@ -15,7 +14,7 @@ const (
 	userIdParam = "userid"
 )
 
-func InitUserRouter() *gin.Engine {
+func InitRouter() *gin.Engine {
 	g := gin.Default()
 
 	// DI
@@ -27,13 +26,12 @@ func InitUserRouter() *gin.Engine {
 	userGroup := g.Group(userApiRoot)
 	{
 		handler := NewUserHandler(uc)
-
-		relativePath := fmt.Sprintf("/:%s", userIdParam)
-		userGroup.GET(relativePath, handler.FindUserById())
-
-		relativePath = ""
-		userGroup.POST(relativePath, handler.InsertNewUser())
-		userGroup.PUT(relativePath, handler.UpdateUser())
+		// POST LoginAPI
+		userGroup.POST("/login", handler.LoginUser())
+		// POST AddNewUserAPI
+		userGroup.POST("", handler.InsertNewUser())
+		// PUT UpdateUserInfoAPI
+		userGroup.PUT("", handler.UpdateUser())
 	}
 
 	return g

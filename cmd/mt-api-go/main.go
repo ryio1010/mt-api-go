@@ -32,7 +32,7 @@ func main() {
 		}
 	}
 
-	engine := http.InitUserRouter()
+	engine := http.InitRouter()
 	engine.Use(gin.Logger())
 	engine.Use(gin.Recovery())
 
