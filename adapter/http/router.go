@@ -2,6 +2,7 @@ package http
 
 import (
 	"github.com/gin-gonic/gin"
+	"mt-api-go/adapter/http/handler"
 	"mt-api-go/domain/service"
 	"mt-api-go/infrastructure"
 	"mt-api-go/infrastructure/postgres"
@@ -11,6 +12,7 @@ import (
 const (
 	apiVersion  = "/v1"
 	userApiRoot = apiVersion + "/user"
+	menuApiRoot = apiVersion + "/menu"
 	userIdParam = "userid"
 )
 
@@ -19,19 +21,30 @@ func InitRouter() *gin.Engine {
 
 	// DI
 	dbConn := infrastructure.NewPostgreSQLConnector()
-	repo := postgres.NewRoomRepository(dbConn.Conn)
-	svc := service.NewUserService(repo)
-	uc := usecase.NewUserUseCase(svc)
+	userRepository := postgres.NewUserRepository(dbConn.Conn)
+	userService := service.NewUserService(userRepository)
+	userUseCase := usecase.NewUserUseCase(userService)
+
+	musclePartRepository := postgres.NewMusclePartRepository(dbConn.Conn)
+	musclePartService := service.NewMusclePartService(musclePartRepository)
+	musclePartUseCase := usecase.NewMusclePartUseCase(musclePartService)
 
 	userGroup := g.Group(userApiRoot)
 	{
-		handler := NewUserHandler(uc)
+		userHandler := handler.NewUserHandler(userUseCase)
 		// POST LoginAPI
-		userGroup.POST("/login", handler.LoginUser())
+		userGroup.POST("/login", userHandler.LoginUser())
 		// POST AddNewUserAPI
-		userGroup.POST("", handler.InsertNewUser())
+		userGroup.POST("", userHandler.InsertNewUser())
 		// PUT UpdateUserInfoAPI
-		userGroup.PUT("", handler.UpdateUser())
+		userGroup.PUT("", userHandler.UpdateUser())
+	}
+
+	menuGroup := g.Group(menuApiRoot)
+	{
+		menuHandler := handler.NewMusclePartHandler(musclePartUseCase)
+		// GET GetAllMusclePartAPI
+		menuGroup.GET("/parts",menuHandler.GetAllMusclePart())
 	}
 
 	return g

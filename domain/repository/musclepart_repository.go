@@ -6,5 +6,5 @@ import (
 )
 
 type IMusclePartRepository interface {
-	SelectAllMusclePart(ctx context.Context) (*model.MMusclepart, error)
+	SelectAllMusclePart(ctx context.Context) ([]*model.MMusclepart, error)
 }

@@ -13,17 +13,17 @@ import (
 	"time"
 )
 
-type userRepository struct {
+type UserRepository struct {
 	DB *sql.DB
 }
 
-func NewRoomRepository(db *sql.DB) repository.IUserRepository {
-	return &userRepository{
+func NewUserRepository(db *sql.DB) repository.IUserRepository {
+	return &UserRepository{
 		DB: db,
 	}
 }
 
-func (ur *userRepository) SelectUserById(ctx context.Context, userId string) (*model.MUser, error) {
+func (ur *UserRepository) SelectUserById(ctx context.Context, userId string) (*model.MUser, error) {
 	id := fmt.Sprintf("%s = ?", model.MUserColumns.Userid)
 	user, err := model.MUsers(
 		qm.Where(id, userId),
@@ -36,7 +36,7 @@ func (ur *userRepository) SelectUserById(ctx context.Context, userId string) (*m
 	return user, err
 }
 
-func (ur *userRepository) InsertNewUser(ctx context.Context, user *model.MUser) error {
+func (ur *UserRepository) InsertNewUser(ctx context.Context, user *model.MUser) error {
 	user.Regid = null.StringFrom(user.Userid)
 	user.Regdate = null.TimeFrom(time.Now())
 	user.Updid = null.StringFrom(user.Userid)
@@ -51,7 +51,7 @@ func (ur *userRepository) InsertNewUser(ctx context.Context, user *model.MUser) 
 	return nil
 }
 
-func (ur *userRepository) UpdateUser(ctx context.Context, user *model.MUser) error {
+func (ur *UserRepository) UpdateUser(ctx context.Context, user *model.MUser) error {
 	user.Regid = null.StringFrom(user.Userid)
 	user.Regdate = null.TimeFrom(time.Now())
 	user.Updid = null.StringFrom(user.Userid)

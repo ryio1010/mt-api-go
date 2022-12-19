@@ -7,7 +7,7 @@ import (
 )
 
 type IMusclePartService interface {
-	SelectAllMusclePart(ctx context.Context) (*model.MMusclepart, error)
+	SelectAllMusclePart(ctx context.Context) ([]*model.MMusclepart, error)
 }
 
 type MusclePartService struct {
@@ -20,6 +20,6 @@ func NewMusclePartService(mr repository.IMusclePartRepository) IMusclePartServic
 	}
 }
 
-func (ms *MusclePartService) SelectAllMusclePart(ctx context.Context) (*model.MMusclepart, error) {
+func (ms *MusclePartService) SelectAllMusclePart(ctx context.Context) ([]*model.MMusclepart, error) {
 	return ms.repo.SelectAllMusclePart(ctx)
 }
