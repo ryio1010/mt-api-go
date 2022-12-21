@@ -29,6 +29,10 @@ func InitRouter() *gin.Engine {
 	musclePartService := service.NewMusclePartService(musclePartRepository)
 	musclePartUseCase := usecase.NewMusclePartUseCase(musclePartService)
 
+	trainingMenuRepository := postgres.NewTrainingMenuRepository(dbConn.Conn)
+	trainingMenuService := service.NewTrainingMenuService(trainingMenuRepository)
+	trainingMenuUseCase := usecase.NewTrainingMenuUseCase(trainingMenuService)
+
 	userGroup := g.Group(userApiRoot)
 	{
 		userHandler := handler.NewUserHandler(userUseCase)
@@ -42,9 +46,16 @@ func InitRouter() *gin.Engine {
 
 	menuGroup := g.Group(menuApiRoot)
 	{
-		menuHandler := handler.NewMusclePartHandler(musclePartUseCase)
+		musclePartHandler := handler.NewMusclePartHandler(musclePartUseCase)
+		trainingMenuHandler := handler.NewTrainingMenuHandler(trainingMenuUseCase)
 		// GET GetAllMusclePartAPI
-		menuGroup.GET("/parts",menuHandler.GetAllMusclePart())
+		menuGroup.GET("/parts", musclePartHandler.GetAllMusclePart())
+		// GET GetMenusByUserIdAPI
+		menuGroup.GET("/:userid", trainingMenuHandler.GetMenuById())
+		// POST InsertNewMenuAPI
+		menuGroup.POST("", trainingMenuHandler.InsertMenu())
+		// DELETE DeleteMenuAPI
+		menuGroup.DELETE("/:menuid", trainingMenuHandler.DeleteMenu())
 	}
 
 	return g

@@ -7,6 +7,7 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"github.com/volatiletech/sqlboiler/v4/boil"
 	"mt-api-go/adapter/http"
 )
 
@@ -31,6 +32,9 @@ func main() {
 			panic(err)
 		}
 	}
+
+	// SQLデバッグ
+	boil.DebugMode = true
 
 	engine := http.InitRouter()
 	engine.Use(gin.Logger())
