@@ -1,4 +1,4 @@
-package http
+package handler
 
 import (
 	"fmt"
@@ -18,12 +18,18 @@ func NewUserHandler(uu usecase.IUserUseCase) *UserHandler {
 	}
 }
 
-func (uh *UserHandler) FindUserById() gin.HandlerFunc {
+func (uh *UserHandler) LoginUser() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ctx := c.Request.Context()
-		userId := c.Param("userid")
+		var userModel model.User
+		err := c.ShouldBind(&userModel)
+		if err != nil {
+			fmt.Println("バインドエラー")
+			fmt.Println(err)
+		}
+		fmt.Println(userModel)
+		user, err := uh.usecase.LoginUser(ctx, &userModel)
 
-		user, err := uh.usecase.FindUserById(ctx, userId)
 		if err != nil {
 			fmt.Println(err)
 			c.JSON(http.StatusInternalServerError, err.Error())

@@ -1,8 +1,8 @@
 package http
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
+	"mt-api-go/adapter/http/handler"
 	"mt-api-go/domain/service"
 	"mt-api-go/infrastructure"
 	"mt-api-go/infrastructure/postgres"
@@ -12,28 +12,50 @@ import (
 const (
 	apiVersion  = "/v1"
 	userApiRoot = apiVersion + "/user"
+	menuApiRoot = apiVersion + "/menu"
 	userIdParam = "userid"
 )
 
-func InitUserRouter() *gin.Engine {
+func InitRouter() *gin.Engine {
 	g := gin.Default()
 
 	// DI
 	dbConn := infrastructure.NewPostgreSQLConnector()
-	repo := postgres.NewRoomRepository(dbConn.Conn)
-	svc := service.NewUserService(repo)
-	uc := usecase.NewUserUseCase(svc)
+	userRepository := postgres.NewUserRepository(dbConn.Conn)
+	userService := service.NewUserService(userRepository)
+	userUseCase := usecase.NewUserUseCase(userService)
+
+	musclePartRepository := postgres.NewMusclePartRepository(dbConn.Conn)
+	musclePartService := service.NewMusclePartService(musclePartRepository)
+	musclePartUseCase := usecase.NewMusclePartUseCase(musclePartService)
+
+	trainingMenuRepository := postgres.NewTrainingMenuRepository(dbConn.Conn)
+	trainingMenuService := service.NewTrainingMenuService(trainingMenuRepository)
+	trainingMenuUseCase := usecase.NewTrainingMenuUseCase(trainingMenuService)
 
 	userGroup := g.Group(userApiRoot)
 	{
-		handler := NewUserHandler(uc)
+		userHandler := handler.NewUserHandler(userUseCase)
+		// POST LoginAPI
+		userGroup.POST("/login", userHandler.LoginUser())
+		// POST AddNewUserAPI
+		userGroup.POST("", userHandler.InsertNewUser())
+		// PUT UpdateUserInfoAPI
+		userGroup.PUT("", userHandler.UpdateUser())
+	}
 
-		relativePath := fmt.Sprintf("/:%s", userIdParam)
-		userGroup.GET(relativePath, handler.FindUserById())
-
-		relativePath = ""
-		userGroup.POST(relativePath, handler.InsertNewUser())
-		userGroup.PUT(relativePath, handler.UpdateUser())
+	menuGroup := g.Group(menuApiRoot)
+	{
+		musclePartHandler := handler.NewMusclePartHandler(musclePartUseCase)
+		trainingMenuHandler := handler.NewTrainingMenuHandler(trainingMenuUseCase)
+		// GET GetAllMusclePartAPI
+		menuGroup.GET("/parts", musclePartHandler.GetAllMusclePart())
+		// GET GetMenusByUserIdAPI
+		menuGroup.GET("/:userid", trainingMenuHandler.GetMenuById())
+		// POST InsertNewMenuAPI
+		menuGroup.POST("", trainingMenuHandler.InsertMenu())
+		// DELETE DeleteMenuAPI
+		menuGroup.DELETE("/:menuid", trainingMenuHandler.DeleteMenu())
 	}
 
 	return g
