@@ -13,6 +13,7 @@ const (
 	apiVersion  = "/v1"
 	userApiRoot = apiVersion + "/user"
 	menuApiRoot = apiVersion + "/menu"
+	logApiRoot  = apiVersion + "/log"
 	userIdParam = "userid"
 )
 
@@ -32,6 +33,10 @@ func InitRouter() *gin.Engine {
 	trainingMenuRepository := postgres.NewTrainingMenuRepository(dbConn.Conn)
 	trainingMenuService := service.NewTrainingMenuService(trainingMenuRepository)
 	trainingMenuUseCase := usecase.NewTrainingMenuUseCase(trainingMenuService)
+
+	TrainingLogRepository := postgres.NewTrainingLogRepository(dbConn.Conn)
+	TrainingLogService := service.NewTrainingLogService(TrainingLogRepository)
+	TrainingLogUseCase := usecase.NewTrainingLogUseCase(TrainingLogService)
 
 	userGroup := g.Group(userApiRoot)
 	{
@@ -56,6 +61,13 @@ func InitRouter() *gin.Engine {
 		menuGroup.POST("", trainingMenuHandler.InsertMenu())
 		// DELETE DeleteMenuAPI
 		menuGroup.DELETE("/:menuid", trainingMenuHandler.DeleteMenu())
+	}
+
+	logGroup := g.Group(logApiRoot)
+	{
+		TrainingLogHandler := handler.NewTrainingLogHandler(TrainingLogUseCase)
+		// GET GetAllTrainingLogByUserId
+		logGroup.GET("/:userid", TrainingLogHandler.GetLogByUserId())
 	}
 
 	return g
