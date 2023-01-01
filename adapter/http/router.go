@@ -22,18 +22,23 @@ func InitRouter() *gin.Engine {
 
 	// DI
 	dbConn := infrastructure.NewPostgreSQLConnector()
+
+	// User
 	userRepository := postgres.NewUserRepository(dbConn.Conn)
 	userService := service.NewUserService(userRepository)
 	userUseCase := usecase.NewUserUseCase(userService)
 
+	// MusclePart
 	musclePartRepository := postgres.NewMusclePartRepository(dbConn.Conn)
 	musclePartService := service.NewMusclePartService(musclePartRepository)
 	musclePartUseCase := usecase.NewMusclePartUseCase(musclePartService)
 
+	// Menu
 	trainingMenuRepository := postgres.NewTrainingMenuRepository(dbConn.Conn)
 	trainingMenuService := service.NewTrainingMenuService(trainingMenuRepository)
 	trainingMenuUseCase := usecase.NewTrainingMenuUseCase(trainingMenuService)
 
+	// Log
 	TrainingLogRepository := postgres.NewTrainingLogRepository(dbConn.Conn)
 	TrainingLogService := service.NewTrainingLogService(TrainingLogRepository)
 	TrainingLogUseCase := usecase.NewTrainingLogUseCase(TrainingLogService)

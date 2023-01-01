@@ -1,6 +1,9 @@
 package model
 
-import "mt-api-go/domain/model"
+import (
+	"go/types"
+	"mt-api-go/domain/model"
+)
 
 type TrainingLog struct {
 	LogId          int     `json:"logid"`
@@ -11,6 +14,35 @@ type TrainingLog struct {
 	TrainingCount  int     `json:"trainingcount"`
 	TrainingDate   string  `json:"trainingdate"`
 	TrainingMemo   string  `json:"trainingmemo"`
+}
+
+type TrainingLogAddForm struct {
+	MenuId              int         `json:"menuid"`
+	TrainingDate        string      `json:"trainingdate"`
+	UserId              string      `json:"userid"`
+	WeightCountMemoList types.Slice `json:"weightcountmemolist"`
+}
+
+type TrainingLogUpdateForm struct {
+	UserId     string      `json:"userid"`
+	UpdateList types.Slice `json:"updatelist"`
+	DeleteList types.Slice `json:"deletelist"`
+}
+
+type TrainingLogDeleteForm struct {
+	MenuId       int    `json:"menuid"`
+	TrainingDate string `json:"trainingdate"`
+	UserId       string `json:"userid"`
+}
+
+type TrainingLogUpdateResponse struct {
+	UpdateList types.Slice `json:"updatelist"`
+	DeleteList types.Slice `json:"deletelist"`
+}
+
+type TrainingLogDeleteResponse struct {
+	MenuId       int    `json:"Menuid"`
+	TrainingDate string `json:"trainingdate"`
 }
 
 func TrainingLogFromDomainModel(t *model.TTraininglog) *TrainingLog {
