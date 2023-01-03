@@ -5,12 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d95b9d77-ed1a-475d-b804-4eaf8f521919" name="Changes" comment="TrainingLog関連APIの実装">
+      <change afterPath="$PROJECT_DIR$/usecase/ports/user_port.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usecase/presenters/user_presenter.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/adapter/http/handler/traininglog_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/adapter/http/handler/traininglog_handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/adapter/http/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/adapter/http/router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/postgres/traininglog_postgres.go" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructure/postgres/traininglog_postgres.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/postgres/user_postgres.go" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructure/postgres/user_postgres.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usecase/model/traininglog.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/model/traininglog.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/adapter/http/handler/musclepart_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/adapters/controllers/musclepart_handler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/adapter/http/handler/traininglog_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/adapters/controllers/traininglog_handler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/adapter/http/handler/trainingmenu_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/adapters/controllers/trainingmenu_handler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/adapter/http/handler/user_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/adapters/controllers/user_controller.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/adapter/http/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/drivers/router.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/mt-api-go/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/mt-api-go/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/infrastructure/db_conn.go" beforeDir="false" afterPath="$PROJECT_DIR$/database/db_conn.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/infrastructure/postgres/musclepart_postgres.go" beforeDir="false" afterPath="$PROJECT_DIR$/adapters/gateways/postgres/musclepart_postgres.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/infrastructure/postgres/traininglog_postgres.go" beforeDir="false" afterPath="$PROJECT_DIR$/adapters/gateways/postgres/traininglog_postgres.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/infrastructure/postgres/trainingmenu_postgres.go" beforeDir="false" afterPath="$PROJECT_DIR$/adapters/gateways/postgres/trainingmenu_postgres.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/infrastructure/postgres/user_postgres.go" beforeDir="false" afterPath="$PROJECT_DIR$/adapters/gateways/postgres/user_postgres.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/usecase/musclepart_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/interactors/musclepart_usecase.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/usecase/traininglog_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/interactors/traininglog_usecase.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/usecase/trainingmenu_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/interactors/trainingmenu_usecase.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/usecase/user_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/usecase/interactors/user_interactor.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,11 +95,11 @@
       <recent name="$PROJECT_DIR$/domain/service" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/adapter/http/handler" />
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/tools/db/migrations" />
-      <recent name="$PROJECT_DIR$/tools/bk" />
-      <recent name="$PROJECT_DIR$/tools" />
+      <recent name="$PROJECT_DIR$/database" />
+      <recent name="$PROJECT_DIR$/drivers" />
+      <recent name="$PROJECT_DIR$/adapters/controllers" />
+      <recent name="$PROJECT_DIR$/usecase/interactors" />
+      <recent name="$PROJECT_DIR$/adapter/gateways" />
     </key>
   </component>
   <component name="RunManager" selected="Go ビルド.go build mt-api-go/cmd/mt-api-go">

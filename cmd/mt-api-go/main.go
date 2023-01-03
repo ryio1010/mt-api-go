@@ -8,7 +8,7 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/volatiletech/sqlboiler/v4/boil"
-	"mt-api-go/adapter/http"
+	"mt-api-go/drivers"
 )
 
 func main() {
@@ -36,7 +36,7 @@ func main() {
 	// SQLデバッグ
 	boil.DebugMode = true
 
-	engine := http.InitRouter()
+	engine := drivers.InitRouter()
 	engine.Use(gin.Logger())
 	engine.Use(gin.Recovery())
 

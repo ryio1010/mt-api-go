@@ -1,17 +1,17 @@
-package handler
+package controllers
 
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"mt-api-go/usecase"
+	"mt-api-go/usecase/interactors"
 	"net/http"
 )
 
 type TrainingLogHandler struct {
-	usecase usecase.ITrainingLogUseCase
+	usecase interactors.ITrainingLogUseCase
 }
 
-func NewTrainingLogHandler(lu usecase.ITrainingLogUseCase) *TrainingLogHandler {
+func NewTrainingLogHandler(lu interactors.ITrainingLogUseCase) *TrainingLogHandler {
 	return &TrainingLogHandler{
 		usecase: lu,
 	}
