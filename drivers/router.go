@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/gin-gonic/gin"
 	"mt-api-go/adapters/controllers"
-	postgres2 "mt-api-go/adapters/gateways/postgres"
+	"mt-api-go/adapters/gateways/rdb"
 	"mt-api-go/database"
 	"mt-api-go/domain/service"
 	"mt-api-go/usecase/interactors"
@@ -27,26 +27,25 @@ func InitRouter() *gin.Engine {
 	dbConn := database.NewPostgreSQLConnector()
 
 	// User
-
 	outputPort := presenters.NewUserOutputPort
 	inputPort := interactors.NewUserUseCase
-	userRepository := postgres2.NewUserRepository
+	userRepository := rdb.NewUserRepository
 	userService := service.NewUserService
 	dbClient := database.PostgreSQLConnector{}
 	userController := controllers.NewUserController(outputPort, inputPort, userService, userRepository, dbClient)
 
 	// MusclePart
-	musclePartRepository := postgres2.NewMusclePartRepository(dbConn.Conn)
+	musclePartRepository := rdb.NewMusclePartRepository(dbConn.Conn)
 	musclePartService := service.NewMusclePartService(musclePartRepository)
 	musclePartUseCase := interactors.NewMusclePartUseCase(musclePartService)
 
 	// Menu
-	trainingMenuRepository := postgres2.NewTrainingMenuRepository(dbConn.Conn)
+	trainingMenuRepository := rdb.NewTrainingMenuRepository(dbConn.Conn)
 	trainingMenuService := service.NewTrainingMenuService(trainingMenuRepository)
 	trainingMenuUseCase := interactors.NewTrainingMenuUseCase(trainingMenuService)
 
 	// Log
-	TrainingLogRepository := postgres2.NewTrainingLogRepository(dbConn.Conn)
+	TrainingLogRepository := rdb.NewTrainingLogRepository(dbConn.Conn)
 	TrainingLogService := service.NewTrainingLogService(TrainingLogRepository)
 	TrainingLogUseCase := interactors.NewTrainingLogUseCase(TrainingLogService)
 
