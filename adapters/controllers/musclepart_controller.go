@@ -1,17 +1,17 @@
-package handler
+package controllers
 
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"mt-api-go/usecase"
+	"mt-api-go/usecase/interactors"
 	"net/http"
 )
 
 type MusclePartHandler struct {
-	usecase usecase.IMusclePartUseCase
+	usecase interactors.IMusclePartUseCase
 }
 
-func NewMusclePartHandler(mu usecase.IMusclePartUseCase) *MusclePartHandler {
+func NewMusclePartHandler(mu interactors.IMusclePartUseCase) *MusclePartHandler {
 	return &MusclePartHandler{
 		usecase: mu,
 	}

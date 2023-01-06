@@ -1,19 +1,19 @@
-package handler
+package controllers
 
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"mt-api-go/usecase"
+	"mt-api-go/usecase/interactors"
 	"mt-api-go/usecase/model"
 	"net/http"
 	"strconv"
 )
 
 type TrainingMenuHandler struct {
-	usecase usecase.ITrainingMenuUseCase
+	usecase interactors.ITrainingMenuUseCase
 }
 
-func NewTrainingMenuHandler(mu usecase.ITrainingMenuUseCase) *TrainingMenuHandler {
+func NewTrainingMenuHandler(mu interactors.ITrainingMenuUseCase) *TrainingMenuHandler {
 	return &TrainingMenuHandler{
 		usecase: mu,
 	}

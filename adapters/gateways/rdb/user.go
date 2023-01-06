@@ -1,4 +1,4 @@
-package postgres
+package rdb
 
 import (
 	"context"
@@ -56,7 +56,7 @@ func (ur *UserRepository) UpdateUser(ctx context.Context, user *model.MUser) err
 	user.Regdate = null.TimeFrom(time.Now())
 	user.Updid = null.StringFrom(user.Userid)
 	user.Upddate = null.TimeFrom(time.Now())
-	user.Version = 1
+	user.Version = user.Version + 1
 
 	_, err := user.Update(ctx, ur.DB, boil.Infer())
 	if err != nil {
