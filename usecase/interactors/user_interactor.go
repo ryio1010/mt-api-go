@@ -10,20 +10,22 @@ import (
 )
 
 type UserUseCase struct {
-	op   ports.UserOutputPort
-	repo repository.IUserRepository
+	op           ports.UserOutputPort
+	userRepo     repository.IUserRepository
+	bodyCompRepo repository.IBodyCompRepository
 }
 
-func NewUserUseCase(uop ports.UserOutputPort, ur repository.IUserRepository) ports.UserInputPort {
+func NewUserUseCase(uop ports.UserOutputPort, ur repository.IUserRepository, br repository.IBodyCompRepository) ports.UserInputPort {
 	return &UserUseCase{
-		op:   uop,
-		repo: ur,
+		op:           uop,
+		userRepo:     ur,
+		bodyCompRepo: br,
 	}
 }
 
 func (u *UserUseCase) LoginUser(ctx context.Context, user *model.User) error {
 	// ログインユーザーの取得
-	ms, err := u.repo.SelectUserById(ctx, string(user.ID))
+	ms, err := u.userRepo.SelectUserById(ctx, string(user.ID))
 
 	if err != nil {
 		return u.op.OutputError(err)
@@ -49,7 +51,7 @@ func (u *UserUseCase) InsertNewUser(ctx context.Context, user *model.User) error
 		Password: string(passwordHash),
 	}
 
-	err = u.repo.InsertNewUser(ctx, &insertionTarget)
+	err = u.userRepo.InsertNewUser(ctx, &insertionTarget)
 
 	if err != nil {
 		return u.op.OutputError(err)
@@ -64,7 +66,7 @@ func (u *UserUseCase) UpdateUser(ctx context.Context, user *model.User) error {
 		Username: user.Name,
 		Password: user.Password,
 	}
-	err := u.repo.UpdateUser(ctx, &updateTarget)
+	err := u.userRepo.UpdateUser(ctx, &updateTarget)
 
 	if err != nil {
 		return u.op.OutputError(err)

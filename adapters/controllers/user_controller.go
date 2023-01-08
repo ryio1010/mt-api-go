@@ -12,22 +12,25 @@ import (
 )
 
 type UserOutputFactory func(*gin.Context) ports.UserOutputPort
-type UserInputFactory func(ports.UserOutputPort, repository.IUserRepository) ports.UserInputPort
+type UserInputFactory func(ports.UserOutputPort, repository.IUserRepository, repository.IBodyCompRepository) ports.UserInputPort
 type UserRepositoryFactory func(*sql.DB) repository.IUserRepository
+type BodyCompRepositoryFactory func(*sql.DB) repository.IBodyCompRepository
 
 type UserController struct {
-	OutputFactory     UserOutputFactory
-	InputFactory      UserInputFactory
-	RepositoryFactory UserRepositoryFactory
-	ClientFactory     database.PostgreSQLConnector
+	OutputFactory             UserOutputFactory
+	InputFactory              UserInputFactory
+	UserRepositoryFactory     UserRepositoryFactory
+	BodyCompRepositoryFactory BodyCompRepositoryFactory
+	ClientFactory             database.PostgreSQLConnector
 }
 
-func NewUserController(outputFactory UserOutputFactory, inputFactory UserInputFactory, repositoryFactory UserRepositoryFactory, clientFactory database.PostgreSQLConnector) *UserController {
+func NewUserController(outputFactory UserOutputFactory, inputFactory UserInputFactory, userRepositoryFactory UserRepositoryFactory, bodyCompRepositoryFactory BodyCompRepositoryFactory, clientFactory database.PostgreSQLConnector) *UserController {
 	return &UserController{
-		OutputFactory:     outputFactory,
-		InputFactory:      inputFactory,
-		RepositoryFactory: repositoryFactory,
-		ClientFactory:     clientFactory,
+		OutputFactory:             outputFactory,
+		InputFactory:              inputFactory,
+		UserRepositoryFactory:     userRepositoryFactory,
+		BodyCompRepositoryFactory: bodyCompRepositoryFactory,
+		ClientFactory:             clientFactory,
 	}
 }
 
@@ -80,6 +83,7 @@ func (u *UserController) UpdateUser(ctx context.Context) gin.HandlerFunc {
 
 func (u *UserController) newInputPort(c *gin.Context) ports.UserInputPort {
 	outputPort := u.OutputFactory(c)
-	repo := u.RepositoryFactory(u.ClientFactory.Conn)
-	return u.InputFactory(outputPort, repo)
+	userRepo := u.UserRepositoryFactory(u.ClientFactory.Conn)
+	bodyCompRepo := u.BodyCompRepositoryFactory(u.ClientFactory.Conn)
+	return u.InputFactory(outputPort, userRepo, bodyCompRepo)
 }

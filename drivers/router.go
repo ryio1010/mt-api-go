@@ -15,7 +15,6 @@ const (
 	userApiRoot = apiVersion + "/user"
 	menuApiRoot = apiVersion + "/menu"
 	logApiRoot  = apiVersion + "/log"
-	userIdParam = "userid"
 )
 
 func InitRouter() *gin.Engine {
@@ -29,6 +28,7 @@ func InitRouter() *gin.Engine {
 	userOutputPort := presenters.NewUserOutputPort
 	userInputPort := interactors.NewUserUseCase
 	userRepository := rdb.NewUserRepository
+	bodyCompRepository := rdb.NewBodyCompRepository
 
 	// MusclePart
 	musclePartOutputPort := presenters.NewMusclePartOutputPort
@@ -47,7 +47,7 @@ func InitRouter() *gin.Engine {
 
 	userGroup := g.Group(userApiRoot)
 	{
-		userController := controllers.NewUserController(userOutputPort, userInputPort, userRepository, dbClient)
+		userController := controllers.NewUserController(userOutputPort, userInputPort, userRepository, bodyCompRepository, dbClient)
 
 		// POST LoginAPI
 		userGroup.POST("/login", userController.LoginUser(ctx))
