@@ -1,32 +1,47 @@
 package controllers
 
 import (
+	"context"
+	"database/sql"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"mt-api-go/usecase/interactors"
-	"net/http"
+	"mt-api-go/database"
+	"mt-api-go/domain/repository"
+	"mt-api-go/usecase/ports"
 )
 
-type MusclePartHandler struct {
-	usecase interactors.IMusclePartUseCase
+type MusclePartOutputFactory func(*gin.Context) ports.MusclePartOutputPort
+type MusclePartInputFactory func(ports.MusclePartOutputPort, repository.IMusclePartRepository) ports.MusclePartInputPort
+type MusclePartRepositoryFactory func(*sql.DB) repository.IMusclePartRepository
+
+type MusclePartController struct {
+	OutputFactory     MusclePartOutputFactory
+	InputFactory      MusclePartInputFactory
+	RepositoryFactory MusclePartRepositoryFactory
+	ClientFactory     database.PostgreSQLConnector
 }
 
-func NewMusclePartHandler(mu interactors.IMusclePartUseCase) *MusclePartHandler {
-	return &MusclePartHandler{
-		usecase: mu,
+func NewMusclePartController(outputFactory MusclePartOutputFactory, inputFactory MusclePartInputFactory, repositoryFactory MusclePartRepositoryFactory, clientFactory database.PostgreSQLConnector) *MusclePartController {
+	return &MusclePartController{
+		OutputFactory:     outputFactory,
+		InputFactory:      inputFactory,
+		RepositoryFactory: repositoryFactory,
+		ClientFactory:     clientFactory,
 	}
 }
 
-func (mh *MusclePartHandler) GetAllMusclePart() gin.HandlerFunc {
+func (m *MusclePartController) GetAllMuscleParts(ctx context.Context) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		ctx := c.Request.Context()
-		muscleParts, err := mh.usecase.GetAllMusclePart(ctx)
+		err := m.newInputPort(c).GetAllMusclePart(ctx)
 
 		if err != nil {
 			fmt.Println(err)
-			c.JSON(http.StatusInternalServerError, err.Error())
 		}
-
-		c.JSON(http.StatusOK, muscleParts)
 	}
+}
+
+func (m *MusclePartController) newInputPort(c *gin.Context) ports.MusclePartInputPort {
+	outputPort := m.OutputFactory(c)
+	repo := m.RepositoryFactory(m.ClientFactory.Conn)
+	return m.InputFactory(outputPort, repo)
 }

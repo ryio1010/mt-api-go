@@ -7,35 +7,25 @@ import (
 	"github.com/gin-gonic/gin"
 	"mt-api-go/database"
 	"mt-api-go/domain/repository"
-	"mt-api-go/domain/service"
 	"mt-api-go/usecase/model"
 	"mt-api-go/usecase/ports"
 )
 
-type IUserController interface {
-	LoginUser(ctx context.Context) func(c *gin.Context) error
-	InsertNewUser(ctx context.Context) func(c *gin.Context) error
-	UpdateUser(ctx context.Context) func(c *gin.Context) error
-}
-
-type OutputFactory func(*gin.Context) ports.UserOutputPort
-type InputFactory func(ports.UserOutputPort, service.IUserService) ports.UserInputPort
-type ServiceFactory func(repository.IUserRepository) service.IUserService
-type RepositoryFactory func(*sql.DB) repository.IUserRepository
+type UserOutputFactory func(*gin.Context) ports.UserOutputPort
+type UserInputFactory func(ports.UserOutputPort, repository.IUserRepository) ports.UserInputPort
+type UserRepositoryFactory func(*sql.DB) repository.IUserRepository
 
 type UserController struct {
-	OutputFactory     OutputFactory
-	InputFactory      InputFactory
-	ServiceFactory    ServiceFactory
-	RepositoryFactory RepositoryFactory
+	OutputFactory     UserOutputFactory
+	InputFactory      UserInputFactory
+	RepositoryFactory UserRepositoryFactory
 	ClientFactory     database.PostgreSQLConnector
 }
 
-func NewUserController(outputFactory OutputFactory, inputFactory InputFactory, serviceFactory ServiceFactory, repositoryFactory RepositoryFactory, clientFactory database.PostgreSQLConnector) *UserController {
+func NewUserController(outputFactory UserOutputFactory, inputFactory UserInputFactory, repositoryFactory UserRepositoryFactory, clientFactory database.PostgreSQLConnector) *UserController {
 	return &UserController{
 		OutputFactory:     outputFactory,
 		InputFactory:      inputFactory,
-		ServiceFactory:    serviceFactory,
 		RepositoryFactory: repositoryFactory,
 		ClientFactory:     clientFactory,
 	}
@@ -91,6 +81,5 @@ func (u *UserController) UpdateUser(ctx context.Context) gin.HandlerFunc {
 func (u *UserController) newInputPort(c *gin.Context) ports.UserInputPort {
 	outputPort := u.OutputFactory(c)
 	repo := u.RepositoryFactory(u.ClientFactory.Conn)
-	svc := u.ServiceFactory(repo)
-	return u.InputFactory(outputPort, svc)
+	return u.InputFactory(outputPort, repo)
 }

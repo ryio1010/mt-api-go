@@ -2,8 +2,9 @@ package interactors
 
 import (
 	"context"
-	"mt-api-go/domain/service"
+	"mt-api-go/domain/repository"
 	"mt-api-go/usecase/model"
+	"mt-api-go/usecase/ports"
 )
 
 type IMusclePartUseCase interface {
@@ -11,21 +12,23 @@ type IMusclePartUseCase interface {
 }
 
 type MusclePartUseCase struct {
-	svc service.IMusclePartService
+	op   ports.MusclePartOutputPort
+	repo repository.IMusclePartRepository
 }
 
-func NewMusclePartUseCase(ms service.IMusclePartService) IMusclePartUseCase {
+func NewMusclePartUseCase(mop ports.MusclePartOutputPort, mr repository.IMusclePartRepository) ports.MusclePartInputPort {
 	return &MusclePartUseCase{
-		svc: ms,
+		op:   mop,
+		repo: mr,
 	}
 }
 
-func (mu *MusclePartUseCase) GetAllMusclePart(ctx context.Context) ([]*model.MusclePart, error) {
+func (mu *MusclePartUseCase) GetAllMusclePart(ctx context.Context) error {
 	// ログインユーザーの取得
-	muscleParts, err := mu.svc.SelectAllMusclePart(ctx)
+	muscleParts, err := mu.repo.SelectAllMusclePart(ctx)
 
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	response := make([]*model.MusclePart, 0)
@@ -34,5 +37,5 @@ func (mu *MusclePartUseCase) GetAllMusclePart(ctx context.Context) ([]*model.Mus
 		response = append(response, entity)
 	}
 
-	return response, nil
+	return mu.op.OutputMuscleParts(response)
 }

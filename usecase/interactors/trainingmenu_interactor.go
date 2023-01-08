@@ -4,32 +4,29 @@ import (
 	"context"
 	"github.com/volatiletech/null/v8"
 	models "mt-api-go/domain/model"
-	"mt-api-go/domain/service"
+	"mt-api-go/domain/repository"
 	"mt-api-go/usecase/model"
+	"mt-api-go/usecase/ports"
 )
 
-type ITrainingMenuUseCase interface {
-	GetMenuByUserId(ctx context.Context, userId string) ([]*model.TrainingMenu, error)
-	InsertMenu(ctx context.Context, menuEntity *model.TrainingMenuRequest) (*model.TrainingMenu, error)
-	DeleteMenu(ctx context.Context, id int) (int, error)
-}
-
 type TrainingMenuUseCase struct {
-	svc service.ITrainingMenuService
+	op   ports.TrainingMenuOutputPort
+	repo repository.ITrainingMenuRepository
 }
 
-func NewTrainingMenuUseCase(ms service.ITrainingMenuService) ITrainingMenuUseCase {
+func NewTrainingMenuUseCase(mop ports.TrainingMenuOutputPort, mr repository.ITrainingMenuRepository) ports.TrainingMenuInputPort {
 	return &TrainingMenuUseCase{
-		svc: ms,
+		op:   mop,
+		repo: mr,
 	}
 }
 
-func (mu *TrainingMenuUseCase) GetMenuByUserId(ctx context.Context, userId string) ([]*model.TrainingMenu, error) {
+func (m *TrainingMenuUseCase) GetMenuByUserId(ctx context.Context, userId string) error {
 	// ログインユーザーの取得
-	trainingMenus, err := mu.svc.SelectMenuByUserId(ctx, userId)
+	trainingMenus, err := m.repo.SelectMenuByUserId(ctx, userId)
 
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	response := make([]*model.TrainingMenu, 0)
@@ -38,10 +35,10 @@ func (mu *TrainingMenuUseCase) GetMenuByUserId(ctx context.Context, userId strin
 		response = append(response, entity)
 	}
 
-	return response, nil
+	return m.op.OutputTrainingMenus(response)
 }
 
-func (mu *TrainingMenuUseCase) InsertMenu(ctx context.Context, menuEntity *model.TrainingMenuRequest) (*model.TrainingMenu, error) {
+func (m *TrainingMenuUseCase) InsertMenu(ctx context.Context, menuEntity *model.TrainingMenuRequest) error {
 
 	insertionTarget := models.MMenu{
 		Menuname:     menuEntity.MenuName,
@@ -49,21 +46,21 @@ func (mu *TrainingMenuUseCase) InsertMenu(ctx context.Context, menuEntity *model
 		Userid:       null.StringFrom(menuEntity.UserId),
 		Status:       "1",
 	}
-	result, err := mu.svc.InsertMenu(ctx, &insertionTarget)
+	result, err := m.repo.InsertMenu(ctx, &insertionTarget)
 
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	return model.TrainingMenuFromDomainModel(result), nil
+	return m.op.OutputTrainingMenu(model.TrainingMenuFromDomainModel(result))
 }
 
-func (mu *TrainingMenuUseCase) DeleteMenu(ctx context.Context, id int) (int, error) {
-	deletedId, err := mu.svc.DeleteMenu(ctx, id)
+func (m *TrainingMenuUseCase) DeleteMenu(ctx context.Context, id int) error {
+	deletedId, err := m.repo.DeleteMenu(ctx, id)
 
 	if err != nil {
-		return 0, err
+		return err
 	}
 
-	return deletedId, nil
+	return m.op.OutputTrainingMenuId(deletedId)
 }

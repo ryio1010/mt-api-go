@@ -6,7 +6,6 @@ import (
 	"mt-api-go/adapters/controllers"
 	"mt-api-go/adapters/gateways/rdb"
 	"mt-api-go/database"
-	"mt-api-go/domain/service"
 	"mt-api-go/usecase/interactors"
 	"mt-api-go/usecase/presenters"
 )
@@ -23,34 +22,33 @@ func InitRouter() *gin.Engine {
 	g := gin.Default()
 	ctx := context.Background()
 
-	// DI
-	dbConn := database.NewPostgreSQLConnector()
+	// DB
+	dbClient := database.PostgreSQLConnector{}
 
 	// User
-	outputPort := presenters.NewUserOutputPort
-	inputPort := interactors.NewUserUseCase
+	userOutputPort := presenters.NewUserOutputPort
+	userInputPort := interactors.NewUserUseCase
 	userRepository := rdb.NewUserRepository
-	userService := service.NewUserService
-	dbClient := database.PostgreSQLConnector{}
-	userController := controllers.NewUserController(outputPort, inputPort, userService, userRepository, dbClient)
 
 	// MusclePart
-	musclePartRepository := rdb.NewMusclePartRepository(dbConn.Conn)
-	musclePartService := service.NewMusclePartService(musclePartRepository)
-	musclePartUseCase := interactors.NewMusclePartUseCase(musclePartService)
+	musclePartOutputPort := presenters.NewMusclePartOutputPort
+	musclePartInputPort := interactors.NewMusclePartUseCase
+	musclePartRepository := rdb.NewMusclePartRepository
 
 	// Menu
-	trainingMenuRepository := rdb.NewTrainingMenuRepository(dbConn.Conn)
-	trainingMenuService := service.NewTrainingMenuService(trainingMenuRepository)
-	trainingMenuUseCase := interactors.NewTrainingMenuUseCase(trainingMenuService)
+	trainingMenuOutputPort := presenters.NewTrainingMenuOutputPort
+	trainingMenuInputPort := interactors.NewTrainingMenuUseCase
+	trainingMenuRepository := rdb.NewTrainingMenuRepository
 
 	// Log
-	TrainingLogRepository := rdb.NewTrainingLogRepository(dbConn.Conn)
-	TrainingLogService := service.NewTrainingLogService(TrainingLogRepository)
-	TrainingLogUseCase := interactors.NewTrainingLogUseCase(TrainingLogService)
+	trainingLogOutputPort := presenters.NewTrainingLogOutputPort
+	trainingLogInputPort := interactors.NewTrainingLogUseCase
+	trainingLogRepository := rdb.NewTrainingLogRepository
 
 	userGroup := g.Group(userApiRoot)
 	{
+		userController := controllers.NewUserController(userOutputPort, userInputPort, userRepository, dbClient)
+
 		// POST LoginAPI
 		userGroup.POST("/login", userController.LoginUser(ctx))
 		// POST AddNewUserAPI
@@ -61,23 +59,24 @@ func InitRouter() *gin.Engine {
 
 	menuGroup := g.Group(menuApiRoot)
 	{
-		musclePartHandler := controllers.NewMusclePartHandler(musclePartUseCase)
-		trainingMenuHandler := controllers.NewTrainingMenuHandler(trainingMenuUseCase)
+		musclePartController := controllers.NewMusclePartController(musclePartOutputPort, musclePartInputPort, musclePartRepository, dbClient)
+		trainingMenuController := controllers.NewTrainingMenuController(trainingMenuOutputPort, trainingMenuInputPort, trainingMenuRepository, dbClient)
+
 		// GET GetAllMusclePartAPI
-		menuGroup.GET("/parts", musclePartHandler.GetAllMusclePart())
+		menuGroup.GET("/parts", musclePartController.GetAllMuscleParts(ctx))
 		// GET GetMenusByUserIdAPI
-		menuGroup.GET("/:userid", trainingMenuHandler.GetMenuById())
+		menuGroup.GET("/:userid", trainingMenuController.GetMenuById(ctx))
 		// POST InsertNewMenuAPI
-		menuGroup.POST("", trainingMenuHandler.InsertMenu())
+		menuGroup.POST("", trainingMenuController.InsertMenu(ctx))
 		// DELETE DeleteMenuAPI
-		menuGroup.DELETE("/:menuid", trainingMenuHandler.DeleteMenu())
+		menuGroup.DELETE("/:menuid", trainingMenuController.DeleteMenu(ctx))
 	}
 
 	logGroup := g.Group(logApiRoot)
 	{
-		TrainingLogHandler := controllers.NewTrainingLogHandler(TrainingLogUseCase)
+		TrainingLogHandler := controllers.NewTrainingLogController(trainingLogOutputPort, trainingLogInputPort, trainingLogRepository, dbClient)
 		// GET GetAllTrainingLogByUserId
-		logGroup.GET("/:userid", TrainingLogHandler.GetLogByUserId())
+		logGroup.GET("/:userid", TrainingLogHandler.GetLogByUserId(ctx))
 	}
 
 	return g

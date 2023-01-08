@@ -4,32 +4,26 @@ import (
 	"context"
 	"golang.org/x/crypto/bcrypt"
 	models "mt-api-go/domain/model"
-	"mt-api-go/domain/service"
+	"mt-api-go/domain/repository"
 	"mt-api-go/usecase/model"
 	"mt-api-go/usecase/ports"
 )
 
-type IUserUseCase interface {
-	LoginUser(ctx context.Context, user *model.User) error
-	InsertNewUser(ctx context.Context, user *model.User) error
-	UpdateUser(ctx context.Context, user *model.User) error
-}
-
 type UserUseCase struct {
-	op  ports.UserOutputPort
-	svc service.IUserService
+	op   ports.UserOutputPort
+	repo repository.IUserRepository
 }
 
-func NewUserUseCase(uop ports.UserOutputPort, us service.IUserService) ports.UserInputPort {
+func NewUserUseCase(uop ports.UserOutputPort, ur repository.IUserRepository) ports.UserInputPort {
 	return &UserUseCase{
-		op:  uop,
-		svc: us,
+		op:   uop,
+		repo: ur,
 	}
 }
 
 func (u *UserUseCase) LoginUser(ctx context.Context, user *model.User) error {
 	// ログインユーザーの取得
-	ms, err := u.svc.FindUserById(ctx, string(user.ID))
+	ms, err := u.repo.SelectUserById(ctx, string(user.ID))
 
 	if err != nil {
 		return u.op.OutputError(err)
@@ -55,7 +49,7 @@ func (u *UserUseCase) InsertNewUser(ctx context.Context, user *model.User) error
 		Password: string(passwordHash),
 	}
 
-	err = u.svc.InsertNewUser(ctx, &insertionTarget)
+	err = u.repo.InsertNewUser(ctx, &insertionTarget)
 
 	if err != nil {
 		return u.op.OutputError(err)
@@ -70,7 +64,7 @@ func (u *UserUseCase) UpdateUser(ctx context.Context, user *model.User) error {
 		Username: user.Name,
 		Password: user.Password,
 	}
-	err := u.svc.UpdateUser(ctx, &updateTarget)
+	err := u.repo.UpdateUser(ctx, &updateTarget)
 
 	if err != nil {
 		return u.op.OutputError(err)

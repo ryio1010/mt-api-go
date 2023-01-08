@@ -2,34 +2,29 @@ package interactors
 
 import (
 	"context"
-	"mt-api-go/domain/service"
+	"mt-api-go/domain/repository"
 	"mt-api-go/usecase/model"
+	"mt-api-go/usecase/ports"
 )
 
-type ITrainingLogUseCase interface {
-	SelectTrainingLogById(ctx context.Context, userId string) ([]*model.TrainingLog, error)
-	InsertTrainingLog(ctx context.Context, target *model.TrainingLog) (*model.TrainingLog, error)
-	UpdateTrainingLog(ctx context.Context, target *model.TrainingLog) (*model.TrainingLog, error)
-	DeleteTrainingLog(ctx context.Context, logId int) (int, error)
-	DeleteTrainingLogByMenuIdAndDate(ctx context.Context, menuId int, trainingDate string) (int, string, error)
-}
-
 type TrainingLogUseCase struct {
-	svc service.ITrainingLogService
+	op   ports.TrainingLogOutputPort
+	repo repository.ITrainingLogRepository
 }
 
-func NewTrainingLogUseCase(ls service.ITrainingLogService) ITrainingLogUseCase {
+func NewTrainingLogUseCase(lop ports.TrainingLogOutputPort, lr repository.ITrainingLogRepository) ports.TrainingLogInputPort {
 	return &TrainingLogUseCase{
-		svc: ls,
+		op:   lop,
+		repo: lr,
 	}
 }
 
-func (lu *TrainingLogUseCase) SelectTrainingLogById(ctx context.Context, userId string) ([]*model.TrainingLog, error) {
+func (l *TrainingLogUseCase) SelectTrainingLogById(ctx context.Context, userId string) error {
 	// ログインユーザーの取得
-	trainingLogList, err := lu.svc.SelectTrainingLogById(ctx, userId)
+	trainingLogList, err := l.repo.SelectTrainingLogById(ctx, userId)
 
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	response := make([]*model.TrainingLog, 0)
@@ -38,21 +33,21 @@ func (lu *TrainingLogUseCase) SelectTrainingLogById(ctx context.Context, userId 
 		response = append(response, entity)
 	}
 
-	return response, nil
+	return l.op.OutputTrainingLogs(response)
 }
 
-func (lu *TrainingLogUseCase) InsertTrainingLog(ctx context.Context, target *model.TrainingLog) (*model.TrainingLog, error) {
-	return nil, nil
+func (l *TrainingLogUseCase) InsertTrainingLog(ctx context.Context, target *model.TrainingLog) error {
+	return nil
 }
 
-func (lu *TrainingLogUseCase) UpdateTrainingLog(ctx context.Context, target *model.TrainingLog) (*model.TrainingLog, error) {
-	return nil, nil
+func (l *TrainingLogUseCase) UpdateTrainingLog(ctx context.Context, target *model.TrainingLog) error {
+	return nil
 }
 
-func (lu *TrainingLogUseCase) DeleteTrainingLog(ctx context.Context, logId int) (int, error) {
-	return 0, nil
+func (l *TrainingLogUseCase) DeleteTrainingLog(ctx context.Context, logId int) error {
+	return nil
 }
 
-func (lu *TrainingLogUseCase) DeleteTrainingLogByMenuIdAndDate(ctx context.Context, menuId int, trainingDate string) (int, string, error) {
-	return 0, "", nil
+func (l *TrainingLogUseCase) DeleteTrainingLogByMenuIdAndDate(ctx context.Context, menuId int, trainingDate string) error {
+	return nil
 }

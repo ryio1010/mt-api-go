@@ -1,74 +1,83 @@
 package controllers
 
 import (
+	"context"
+	"database/sql"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"mt-api-go/usecase/interactors"
+	"mt-api-go/database"
+	"mt-api-go/domain/repository"
 	"mt-api-go/usecase/model"
-	"net/http"
+	"mt-api-go/usecase/ports"
 	"strconv"
 )
 
-type TrainingMenuHandler struct {
-	usecase interactors.ITrainingMenuUseCase
+type TrainingMenuOutputFactory func(*gin.Context) ports.TrainingMenuOutputPort
+type TrainingMenuInputFactory func(ports.TrainingMenuOutputPort, repository.ITrainingMenuRepository) ports.TrainingMenuInputPort
+type TrainingMenuRepositoryFactory func(*sql.DB) repository.ITrainingMenuRepository
+
+type TrainingMenuController struct {
+	OutputFactory     TrainingMenuOutputFactory
+	InputFactory      TrainingMenuInputFactory
+	RepositoryFactory TrainingMenuRepositoryFactory
+	ClientFactory     database.PostgreSQLConnector
 }
 
-func NewTrainingMenuHandler(mu interactors.ITrainingMenuUseCase) *TrainingMenuHandler {
-	return &TrainingMenuHandler{
-		usecase: mu,
+func NewTrainingMenuController(outputFactory TrainingMenuOutputFactory, inputFactory TrainingMenuInputFactory, repositoryFactory TrainingMenuRepositoryFactory, clientFactory database.PostgreSQLConnector) *TrainingMenuController {
+	return &TrainingMenuController{
+		OutputFactory:     outputFactory,
+		InputFactory:      inputFactory,
+		RepositoryFactory: repositoryFactory,
+		ClientFactory:     clientFactory,
 	}
 }
 
-func (mh *TrainingMenuHandler) GetMenuById() gin.HandlerFunc {
+func (m *TrainingMenuController) GetMenuById(ctx context.Context) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		ctx := c.Request.Context()
 		userId := c.Param("userid")
 
-		menus, err := mh.usecase.GetMenuByUserId(ctx, userId)
+		err := m.newInputPort(c).GetMenuByUserId(ctx, userId)
 
 		if err != nil {
 			fmt.Println(err)
-			c.JSON(http.StatusInternalServerError, err.Error())
 		}
-
-		c.JSON(http.StatusOK, menus)
 	}
 }
 
-func (mh *TrainingMenuHandler) InsertMenu() gin.HandlerFunc {
+func (m *TrainingMenuController) InsertMenu(ctx context.Context) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		ctx := c.Request.Context()
 		var trainingMenuRequestModel model.TrainingMenuRequest
 		err := c.ShouldBind(&trainingMenuRequestModel)
+
 		if err != nil {
 			fmt.Println("バインドエラー")
 			fmt.Println(err)
 		}
+
 		fmt.Println(trainingMenuRequestModel)
-		insertedMenu, err := mh.usecase.InsertMenu(ctx, &trainingMenuRequestModel)
+		err = m.newInputPort(c).InsertMenu(ctx, &trainingMenuRequestModel)
 
 		if err != nil {
 			fmt.Println(err)
-			c.JSON(http.StatusInternalServerError, err.Error())
 		}
-
-		c.JSON(http.StatusOK, insertedMenu)
 	}
 }
 
-func (mh *TrainingMenuHandler) DeleteMenu() gin.HandlerFunc {
+func (m *TrainingMenuController) DeleteMenu(ctx context.Context) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		ctx := c.Request.Context()
 		menuId := c.Param("menuid")
 		idInt, _ := strconv.Atoi(menuId)
 
-		deletedId, err := mh.usecase.DeleteMenu(ctx, idInt)
+		err := m.newInputPort(c).DeleteMenu(ctx, idInt)
 
 		if err != nil {
 			fmt.Println(err)
-			c.JSON(http.StatusInternalServerError, err.Error())
 		}
-
-		c.JSON(http.StatusOK, deletedId)
 	}
+}
+
+func (m *TrainingMenuController) newInputPort(c *gin.Context) ports.TrainingMenuInputPort {
+	outputPort := m.OutputFactory(c)
+	repo := m.RepositoryFactory(m.ClientFactory.Conn)
+	return m.InputFactory(outputPort, repo)
 }
